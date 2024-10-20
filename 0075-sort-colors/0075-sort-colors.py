@@ -8,6 +8,7 @@ class Solution:
 
         while current <= p2:
             if nums[current] == 0:
+                # If it was 1, it was skipped, so if the current value is 0, change it to advance 0.
                 nums[p1], nums[current] = nums[current], nums[p1]
                 p1 += 1
                 current += 1
@@ -16,5 +17,5 @@ class Solution:
                 nums[current], nums[p2] = nums[p2], nums[current]
                 p2 -= 1
 
-            else:
+            else: # if current is 1, skip
                 current += 1
