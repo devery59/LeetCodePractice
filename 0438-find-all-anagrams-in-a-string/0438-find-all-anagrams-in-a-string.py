@@ -13,4 +13,7 @@ class Solution:
 
             counter_s[s[i - interval + 1]] -= 1
 
+            if counter_s[s[i - interval + 1]] == 0:
+                del counter_s[s[i - interval + 1]]
+
         return answer
