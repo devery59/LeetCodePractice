@@ -1,14 +1,16 @@
 class Solution:
     def findAnagrams(self, s: str, p: str) -> List[int]:
-        answer = list()
+        answer = []
         interval = len(p)
         counter_p = Counter(p)
-        counter_s = Counter(s[:interval])
-        for i in range(len(s) - interval):
+        counter_s = Counter(s[: interval - 1])
+
+        for i in range(interval - 1, len(s)):
+            counter_s[s[i]] += 1
+
             if counter_s == counter_p:
-                answer.append(i)
-            counter_s[s[i]] -= 1
-            counter_s[s[i + interval]] += 1
-        if counter_s == counter_p:
-                answer.append(len(s)-interval)
+                answer.append(i - interval + 1)
+
+            counter_s[s[i - interval + 1]] -= 1
+
         return answer
