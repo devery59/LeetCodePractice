@@ -1,22 +1,24 @@
 class Solution:
     def maximumBeauty(self, items: List[List[int]], queries: List[int]) -> List[int]:
+        ans = [0] * len(queries)
+
         items.sort()
 
-        max_beauty = items[0][1]
-        for i in range(len(items)):
-            max_beauty = max(max_beauty, items[i][1])
-            items[i][1] = max_beauty
+        queries_with_indices = [[queries[i], i] for i in range(len(queries))]
 
-        return [self.binary_search(items, q) for q in queries]
+        queries_with_indices.sort()
 
-    def binary_search(self, items, target_price):
-        left, right = 0, len(items) - 1
+        item_index = 0
         max_beauty = 0
-        while left <= right:
-            mid = (left + right) // 2
-            if items[mid][0] > target_price:
-                right = mid - 1
-            else:
-                max_beauty = max(max_beauty, items[mid][1])
-                left = mid + 1
-        return max_beauty
+
+        for i in range(len(queries)):
+            query = queries_with_indices[i][0]
+            original_index = queries_with_indices[i][1]
+
+            while item_index < len(items) and items[item_index][0] <= query:
+                max_beauty = max(max_beauty, items[item_index][1])
+                item_index += 1
+
+            ans[original_index] = max_beauty
+
+        return ans
